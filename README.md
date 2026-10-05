@@ -7,8 +7,7 @@ Manage multiple upstream MCP (Model Context Protocol) servers, sync their tools,
 [![CI](https://github.com/daniel3303/McpManager/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/daniel3303/McpManager/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/daniel3303/McpManager/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/daniel3303/McpManager/actions/workflows/codeql.yml)
 [![codecov](https://codecov.io/github/daniel3303/McpManager/graph/badge.svg?branch=main)](https://codecov.io/github/daniel3303/McpManager)
-[![Docker Image Version](https://img.shields.io/docker/v/daniel3303/mcpmanager?logo=docker&label=docker&sort=semver)](https://hub.docker.com/r/daniel3303/mcpmanager)
-[![Docker Pulls](https://img.shields.io/docker/pulls/daniel3303/mcpmanager?logo=docker)](https://hub.docker.com/r/daniel3303/mcpmanager)
+[![GHCR](https://img.shields.io/badge/ghcr.io-daniel3303%2Fmcpmanager-blue?logo=github)](https://github.com/daniel3303/McpManager/pkgs/container/mcpmanager)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Release](https://img.shields.io/github/v/release/daniel3303/McpManager?logo=github&display_name=tag)](https://github.com/daniel3303/McpManager/releases)
 ![AI Agents](https://img.shields.io/badge/AI_Agents-Ready-FF6F00)
@@ -23,7 +22,7 @@ Manage multiple upstream MCP (Model Context Protocol) servers, sync their tools,
 ## Quick Start
 
 ```bash
-docker run -p 5057:8080 -v mcpmanager-data:/app/data daniel3303/mcpmanager:latest
+docker run -p 5057:8080 -v mcpmanager-data:/app/data ghcr.io/daniel3303/mcpmanager:latest
 ```
 
 Open [http://localhost:5057](http://localhost:5057) and sign in with the default admin account:
@@ -93,7 +92,7 @@ Multi-user support with ASP.NET Identity. Claims-based authorization controls ac
 ### Docker
 
 ```bash
-docker run -p 5057:8080 -v mcpmanager-data:/app/data daniel3303/mcpmanager:latest
+docker run -p 5057:8080 -v mcpmanager-data:/app/data ghcr.io/daniel3303/mcpmanager:latest
 ```
 
 The SQLite database and logs are stored in `/app/data`. Sign in with the default admin account shown in the [Quick Start](#quick-start) and change the password immediately.
@@ -103,7 +102,7 @@ The SQLite database and logs are stored in `/app/data`. Sign in with the default
 If you need MCP Manager to connect to MCP servers running on the host machine (e.g., Stdio servers or services on `localhost`), use host networking:
 
 ```bash
-docker run --network host -v mcpmanager-data:/app/data daniel3303/mcpmanager:latest
+docker run --network host -v mcpmanager-data:/app/data ghcr.io/daniel3303/mcpmanager:latest
 ```
 
 With `--network host` the container shares the host's network stack directly, so MCP Manager listens on port `8080` and can reach any local service. The `-p` flag is not needed in this mode.

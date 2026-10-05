@@ -1,0 +1,11 @@
+<Project>
+  <ItemGroup>
+    <!--
+      CVE-2025-6965 (SQLite < 3.50.2) in the native SQLite bundled by
+      SQLitePCLRaw.lib.e_sqlite3 (pulled in via Microsoft.EntityFrameworkCore.Sqlite).
+      No patched package exists yet (affected: <= 2.1.11). Remove this suppression
+      once a fixed SQLitePCLRaw release is available.
+    -->
+    <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-2m69-gcr7-jv3q" />
+  </ItemGroup>
+</Project>
