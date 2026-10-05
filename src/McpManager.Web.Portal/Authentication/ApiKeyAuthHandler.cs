@@ -16,6 +16,7 @@ public class ApiKeyAuthHandler : AuthenticationHandler<AuthenticationSchemeOptio
     public const string SchemeName = "ApiKey";
     public const string ApiKeyNameItemKey = "ApiKeyName";
     public const string ApiKeyIdItemKey = "ApiKeyId";
+    public const string QueryTokenParameter = "token";
 
     private readonly ApiKeyRepository _apiKeyRepository;
 
@@ -36,7 +37,7 @@ public class ApiKeyAuthHandler : AuthenticationHandler<AuthenticationSchemeOptio
 
         if (string.IsNullOrEmpty(key))
         {
-            return AuthenticateResult.Fail("Missing or invalid Authorization header");
+            return AuthenticateResult.Fail("Missing API key (Authorization: Bearer header or ?token= query parameter)");
         }
 
         var apiKey = await _apiKeyRepository.GetByKey(key).FirstOrDefaultAsync();
@@ -77,13 +78,26 @@ public class ApiKeyAuthHandler : AuthenticationHandler<AuthenticationSchemeOptio
 
     private string ExtractApiKey()
     {
+        // 1. Preferred: Authorization: Bearer <key>
         if (Request.Headers.ContainsKey("Authorization"))
         {
             var authHeader = Request.Headers.Authorization.ToString();
             if (authHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
             {
-                return authHeader["Bearer ".Length..].Trim();
+                var bearer = authHeader["Bearer ".Length..].Trim();
+                if (!string.IsNullOrEmpty(bearer))
+                {
+                    return bearer;
+                }
             }
+        }
+
+        // 2. Fallback: ?token=<key> in the URL, for clients (e.g. Claude custom
+        //    connectors) that can only be configured with a URL.
+        var queryToken = Request.Query[QueryTokenParameter].ToString().Trim();
+        if (!string.IsNullOrEmpty(queryToken))
+        {
+            return queryToken;
         }
 
         return null;

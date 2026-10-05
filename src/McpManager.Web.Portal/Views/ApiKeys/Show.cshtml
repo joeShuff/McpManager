@@ -94,6 +94,9 @@
                 <div class="text-sm text-base-content/70 mt-2">
                     <p class="mb-2">Use this key in the <code>Authorization</code> header:</p>
                     <pre class="bg-base-200 rounded p-2 text-xs overflow-x-auto"><code id="api-key-usage">Authorization: Bearer @(Model.Key.Substring(0, 10))...</code></pre>
+                    <p class="mt-3 mb-2">Or, for clients that only accept a URL (e.g. Claude custom connectors), add it as a query parameter:</p>
+                    <pre class="bg-base-200 rounded p-2 text-xs overflow-x-auto"><code id="api-key-url-usage">@("https://your-host/mcp?token=" + Model.Key.Substring(0, 10) + "...")</code></pre>
+                    <p class="mt-2 text-xs text-warning">URLs can end up in proxy and browser logs, so treat a URL containing the token as a secret.</p>
                 </div>
             </div>
         </div>
@@ -116,7 +119,7 @@
         </div>
         <div>
             <h3 class="font-semibold text-sm mb-1">Using the Key</h3>
-            <p class="text-base-content/70">Add the key as a Bearer token in the <code>Authorization</code> header when configuring your AI client to connect to MCP Manager.</p>
+            <p class="text-base-content/70">Add the key as a Bearer token in the <code>Authorization</code> header when configuring your AI client to connect to MCP Manager, or append <code>?token=KEY</code> to the MCP URL if the client only accepts a URL.</p>
         </div>
     </div>
 }
@@ -139,6 +142,7 @@
                     // Show full key in details and usage sections
                     $('#api-key-display').text(data.key).addClass('select-all break-all');
                     $('#api-key-usage').text('Authorization: Bearer ' + data.key);
+                    $('#api-key-url-usage').text(window.location.origin + '/mcp?token=' + data.key);
                     btn.remove();
                 });
             });

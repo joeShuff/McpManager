@@ -57,6 +57,12 @@
         </svg>
         Antigravity
     </button>
+    <button class="btn btn-ghost border border-base-300 btn-tool-connect-@suffix" data-tool="claude-url">
+        <svg class="size-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Claude (URL)
+    </button>
 </div>
 
 <!-- Connection modal -->
@@ -103,6 +109,11 @@
                 path: '.mcp.json',
                 snippet: JSON.stringify({ mcpServers: { mcpmanager: { url: mcpUrl, headers: { Authorization: 'Bearer ' + apiKeyPlaceholder } } } }, null, 2),
                 command: 'claude mcp add --transport http mcpmanager ' + mcpUrl + ' --header "Authorization: Bearer ' + apiKeyPlaceholder + '"'
+            },
+            'claude-url': {
+                title: 'Claude (custom connector URL)',
+                path: 'Settings \u2192 Connectors \u2192 Add custom connector \u2192 paste this URL',
+                snippet: mcpUrl + '?token=' + apiKeyPlaceholder
             },
             'windsurf': {
                 title: 'Windsurf',
