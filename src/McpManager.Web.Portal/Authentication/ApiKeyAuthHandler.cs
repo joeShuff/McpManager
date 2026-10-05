@@ -37,7 +37,9 @@ public class ApiKeyAuthHandler : AuthenticationHandler<AuthenticationSchemeOptio
 
         if (string.IsNullOrEmpty(key))
         {
-            return AuthenticateResult.Fail("Missing API key (Authorization: Bearer header or ?token= query parameter)");
+            return AuthenticateResult.Fail(
+                "Missing API key (Authorization: Bearer header or ?token= query parameter)"
+            );
         }
 
         var apiKey = await _apiKeyRepository.GetByKey(key).FirstOrDefaultAsync();
